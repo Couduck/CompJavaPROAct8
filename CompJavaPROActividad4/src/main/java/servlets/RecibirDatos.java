@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -38,7 +40,23 @@ public class RecibirDatos extends HttpServlet {
             String n1 = request.getParameter("base");
             String n2 = request.getParameter("altura");
         
+            String nombre = request.getParameter("nombre");
+            String apellido = request.getParameter("apellido");
+            
+            HttpSession sesion = request.getSession(false);
+            sesion.setAttribute("name", nombre);
+            sesion.setAttribute("lastName", apellido);
+
             Triangulo t = new Triangulo(n1, n2);
+            
+            Cookie ck = new Cookie("ckBase", t.getBase()+"");
+            response.addCookie(ck);
+            ck = new Cookie("ckAltura", t.getAltura()+"");
+            response.addCookie(ck);
+            ck = new Cookie("ckPerimetro", t.getPerimetro()+"");
+            response.addCookie(ck);
+            ck = new Cookie("ckArea", t.getArea()+"");
+            response.addCookie(ck);
             
             request.setAttribute("resultado", t);
             request.getRequestDispatcher("/mostrarResultado.jsp").forward(request, response);

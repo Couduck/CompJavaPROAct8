@@ -14,7 +14,7 @@
         <title>Resultados del calculo</title>
     </head>
     <body>
-        
+             
         <!-- Se manda a llamar el resultado del servlet y se despliegan los resultados en pantalla -->
         <%
             Triangulo result = (Triangulo) request.getAttribute("resultado");

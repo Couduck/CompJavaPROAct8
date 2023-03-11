@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="servlets.RecibirDatos"%>
+<%@page import="java.util.Enumeration"%>
 
 <!DOCTYPE html>
 <html>
@@ -15,15 +16,84 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h1>Computación Avanzada en Java Actividad 4: ¡Ahora con Servlets!</h1>
         
-        <div><h2>Formulario de ingreso</h2>
+        <%
+            HttpSession sesion = request.getSession(false);
+            Enumeration enumeracion = sesion.getAttributeNames();
+            
+            Cookie[] cke = request.getCookies();
+            String base="0", altura="0", perimetro="0", area="0";
+        %>  
+        
+        <h1>Computación Avanzada en Java Actividad 7: ¡Cookies 'n Sessions!</h1>
+   
+        <div>
             <form action="RecibirDatos" method="post">
+                
+                <%if(!enumeracion.hasMoreElements())
+                {
+                %>
+                
+                    <h3>Ingresa tu nombre para recordarlo mas tarde!</h3>
+                        Nombre:<br>
+                        <input type="text" name="nombre" value=""><br><br>
+                        Apellido:<br>
+                        <input type="text" name="apellido" value=""><br><br>
+
+                <%
+                } 
+                
+                else
+                {
+                    out.print("<h2>Bienvenido de vuelta " + sesion.getAttribute("name") + " " + sesion.getAttribute("lastName") + "!</h2>");
+                }
+                
+                if(cke != null)
+                {
+                    
+                    out.print("<br><br>");
+
+                    for(int i = 0; i<cke.length; i++)
+                    {
+                        if(cke[i].getName().equals("ckBase"))
+                        {
+                            base = cke[i].getValue();
+                        }
+
+                        if(cke[i].getName().equals("ckAltura"))
+                        {
+                            altura = cke[i].getValue();
+                        }
+
+                        if(cke[i].getName().equals("ckPerimetro"))
+                        {
+                            perimetro = cke[i].getValue();
+                        }
+
+                        if(cke[i].getName().equals("ckArea"))
+                        {
+                            area = cke[i].getValue();
+                        }
+                    }
+
+                    out.print("<h2>Datos del último triangulo calculado</h2>");
+                    out.print("Base = " + base + "<br>");
+                    out.print("Altura = " + altura + "<br>");
+                    out.print("Perimetro = " + perimetro + "<br>");
+                    out.print("Area = " + area + "<br>");
+
+                }
+
+
+
+                %>
+
+            <h3>Ingrese los datos del triangulo</h3>
                 Base:<br>
                     <input type="text" name="base" value=""><br><br>
                 Altura:<br>
-                <input type="text" name="altura" value=""><br><br>
-                <input type="submit" value="Area y Perimetro">
+                    <input type="text" name="altura" value=""><br><br>
+                <input type="submit" value="Calcular">
             </form>
         </div>
         
