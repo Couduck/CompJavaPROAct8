@@ -18,6 +18,7 @@
     <body>
         
         <%
+            //Se inicializa la sesión, las cookies y las variables donde mostrar los atributos del traingulo
             HttpSession sesion = request.getSession(false);
             Enumeration enumeracion = sesion.getAttributeNames();
             
@@ -30,7 +31,8 @@
         <div>
             <form action="RecibirDatos" method="post">
                 
-                <%if(!enumeracion.hasMoreElements())
+                <%
+                if(!enumeracion.hasMoreElements())    //En caso de que no haya habido una sesión, se le pedirá que ingrese su nombre
                 {
                 %>
                 
@@ -43,15 +45,13 @@
                 <%
                 } 
                 
-                else
+                else    //Si ya hubo una sesión, se mostrará el nombre ingresado anteriormente
                 {
                     out.print("<h2>Bienvenido de vuelta " + sesion.getAttribute("name") + " " + sesion.getAttribute("lastName") + "!</h2>");
                 }
                 
-                if(cke != null)
+                if(cke != null) //Aqui es donde se cargan los valores de las cookies para mostrar los cálculos del último triangulo calculado
                 {
-                    
-                    out.print("<br><br>");
 
                     for(int i = 0; i<cke.length; i++)
                     {
@@ -84,10 +84,9 @@
 
                 }
 
-
-
                 %>
 
+            <!-- Formulario para el cálculo del traingulo-->
             <h3>Ingrese los datos del triangulo</h3>
                 Base:<br>
                     <input type="text" name="base" value=""><br><br>

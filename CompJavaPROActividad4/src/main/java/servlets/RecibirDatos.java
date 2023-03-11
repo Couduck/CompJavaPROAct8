@@ -36,19 +36,23 @@ public class RecibirDatos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) 
         {
-            //Se piden los valores del formulario y se utilizan para el cálculo de los valores para guardarse en variables de tipo int
+            //Se piden los valores del formulario del traingulo y se utilizan para el cálculo de los valores para guardarse en variables de tipo int
             String n1 = request.getParameter("base");
             String n2 = request.getParameter("altura");
-        
+            
+            //Se piden los valores del nombre del formulario
             String nombre = request.getParameter("nombre");
             String apellido = request.getParameter("apellido");
             
+            //Se generan los valores de la sesión actual
             HttpSession sesion = request.getSession(false);
             sesion.setAttribute("name", nombre);
             sesion.setAttribute("lastName", apellido);
 
+            //Se crea el triangulo con los valores ingresados
             Triangulo t = new Triangulo(n1, n2);
             
+            //Se crean las cookies para 
             Cookie ck = new Cookie("ckBase", t.getBase()+"");
             response.addCookie(ck);
             ck = new Cookie("ckAltura", t.getAltura()+"");
