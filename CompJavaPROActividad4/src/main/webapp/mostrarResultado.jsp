@@ -17,14 +17,14 @@
              
         <!-- Se manda a llamar el resultado del servlet y se despliegan los resultados en pantalla -->
         <%
-            Triangulo result = (Triangulo) request.getAttribute("resultado");
+                Triangulo result = (Triangulo) request.getAttribute("resultado");
         %>
         
-        <h1>Resultados del calculo con servlet</h1>
-        <h2>Area</h2>
-        <%=result.getArea()%>
-        <br><br>
-        <h2>Perimetro</h2>
-        <%=result.getPerimetro()%>
+                <h1>Resultados del calculo con servlet</h1>
+                <h2>Area</h2>
+                <%=result.getArea()%>
+                <br><br>
+                <h2>Perimetro</h2>
+                <%=result.getPerimetro()%>
     </body>
 </html>

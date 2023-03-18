@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="servlets.RecibirDatos"%>
 <%@page import="java.util.Enumeration"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Collections"%>
 
 <!DOCTYPE html>
 <html>
@@ -21,19 +23,25 @@
             //Se inicializa la sesión, las cookies y las variables donde mostrar los atributos del traingulo
             HttpSession sesion = request.getSession(false);
             Enumeration enumeracion = sesion.getAttributeNames();
-            
             Cookie[] cke = request.getCookies();
             String base="0", altura="0", perimetro="0", area="0";
+            
+            //El tipo de error que se encontró
+            Integer errores = (Integer) request.getAttribute("AVISO"); 
         %>  
         
-        <h1>Computación Avanzada en Java Actividad 7: ¡Cookies 'n Sessions!</h1>
+        <h1>Computación Avanzada en Java Actividad 8: ¡Filtros purificadores!</h1>
    
         <div>
             <form action="RecibirDatos" method="post">
                 
                 <%
-                if(!enumeracion.hasMoreElements())    //En caso de que no haya habido una sesión, se le pedirá que ingrese su nombre
-                {
+                
+                //Ayudan para detectar si hay alguna sesión o no, si no la hay, se pregguntará por el nombre
+                List<String> lista = Collections.list(enumeracion);
+                
+                if(lista.size() <= 1)    //En caso de que no haya habido una sesión, se le pedirá que ingrese su nombre
+                {            
                 %>
                 
                     <h3>Ingresa tu nombre para recordarlo mas tarde!</h3>
@@ -82,7 +90,7 @@
                     out.print("Perimetro = " + perimetro + "<br>");
                     out.print("Area = " + area + "<br>");
 
-                }
+                } 
 
                 %>
 
@@ -96,5 +104,23 @@
             </form>
         </div>
         
+        <%
+
+            //En caso de que haya errores, se imprime un mensaje especificando cual ocurrió
+            if(errores != null)
+            {
+            
+                if(errores == 1)
+                {
+                    out.print("<h4>ERROR: Las medidas del triangulo no pueden ser menores o iguales a 0</h4>");
+                }
+
+                if(errores == 2)
+                {
+                    out.print("<h4>ERROR: Faltan datos por ingresar");
+                }
+            }
+        %>
+                
     </body>
 </html>
